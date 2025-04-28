@@ -10,16 +10,17 @@ contains
 
   scenarios starter_state Values
 
-      Started // k
+      Started // there can be operational states uninteresting to the Starter
       The car is started.
 
-      Starting // d
+      Starting
       The car is being started by the Starter.
 
-      Stopping // b
-      The car is currently shutting down.
+      Shutting_down
+      The car is currently shutting down.  It is assumed that there is
+      a process for this and that it does not occur instantly.
 
-      Off // x
+      Off
       Engine and Starter and all other Car components are off.
 
   // ------------------------------------------------------------
@@ -30,25 +31,17 @@ contains
       start_button
       The button pushed to start or stop the car.
 
-  // component in_park
-  //     The gear selector is in Park and the Car is not moving.
-  //     If the gear selector is not in Park, the Car can be assumed to be
-  //     moving.
-
-  //     FRET Input var.
-  //     FRET : boolean.
-
   component braking
       The brakes are applied.
 
       FRET Input var.
       FRET : boolean.
 
-  component is_moving
-    Is true if the Car could be moving.
+  component speed
+    The Car could be moving.
 
       FRET Output var.
-      FRET : boolean.
+      FRET : integer.
 
   // ------------------------------------------------------------
   // Starter requirements.
@@ -63,7 +56,8 @@ contains
     The car can be started by pressing the start button.
 
     indexing
-      source: IGN.1 from Car.Manual
+      source: IGN.1 from requirements.txt
+      source: C-Req-1 from requirements.txt
       FRET: upon start_button & Off the Car shall immediately satisfy Starting.
 
   requirement Stop
@@ -71,15 +65,17 @@ contains
     button for 3 seconds.
 
     indexing
-      source: IGN.3 from Car.Manual
-      FRET: upon !Off & !is_moving & persisted(2, start_button)
+      source: IGN.2 from requirements.txt
+      source: C-Req-2 from requirements.txt
+      FRET: upon !Off & (speed = 0) & persisted(2, start_button)
             the Car shall eventually satisfy Off.
 
   requirement Braking
     The brakes will stop the car from moving.
 
     indexing
-      FRET: upon braking the Car shall at the next timepoint satisfy !is_moving
+      FRET: upon braking the Car shall at the next timepoint
+            satisfy speed = 0. // intMax(0, speed - 10).
 
   // ----------------------------------------------------------------------
   subsystem Alarm
@@ -87,23 +83,23 @@ contains
   a loud noise and disabling the car.  The car should remain disabled until
   the authorized user resets the alarm.
 
-  scenarios alarm_state Values
+  scenarios alarm Values
 
-      alarm_disabled // n
+      alarm_disabled
       The Alarm is disabled and will not generate an alarm even if a trigger
       event occurs.
 
-      alarm_enabled // y
+      alarm_enabled
       The Alarm is enabled but not indicating an alarm state.
 
       alarm_warning
       The Alarm is giving an initial warning but is not yet going off.
 
-      alarm_alarming // p?
+      alarm_alarming
       The Alarm is indicating an alarm condition via sounds, lights, and
       other means.
 
-      alarm_halting_car // m
+      alarm_halting_car
       This is the state where the Alarm is active (sounding) and is in the
       process of halting the other Car systems.
 
@@ -139,21 +135,18 @@ contains
     The alarm can be turned on by pressing the alarm button.
 
     indexing
-      FRET: upon alarm_disabled & alarm_button the Car shall at the next timepoint satisfy alarm_enabled.
+      source: ALRM-1 in requirements.txt
+      source: ALRM-2 in requirements.txt
+      FRET: upon alarm_disabled & alarm_button
+            & Off // ALRM-2
+            the Car shall immediately satisfy alarm_enabled.
 
-  requirement (Luxury) ALRM-2
-    The alarm can be turned off by pressing pressing the alarm_button for 2
-    seconds.
-
-    indexing
-      FRET: upon alarm_enabled & persisted(1, alarm_button) the Car shall at the next timepoint satisfy alarm_disabled.
-
-  requirement (Luxury) ALRM-3
-    If the alarm is triggered, it will go off until turned off.
+  requirement (Luxury) Turn alarm off (ALRM-4)
+    The alarm can be shutoff by holding the alarm button for 3
+    seconds as long as it has not been triggered.
 
     indexing
-      FRET: upon alarm_enabled & trigger_alarm the Car shall until alarm_disabled satisfy alarm_alarming.
-      FET: Car shall always satisfy if (!alarm_enabled & enable_alarm & !reset_alarm) then alarm_enabled
-      FET: Car shall always satisfy if (alarm_enabled & trigger_alarm) then alarm_alarming
+      FRET: upon alarm_enabled & persisted(2, alarm_button)
+            the Car shall immediately satisfy alarm_disabled.
 
 end

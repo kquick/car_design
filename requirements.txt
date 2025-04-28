@@ -1,0 +1,66 @@
+Requirements for a Car
+----------------------
+
+This is the requirements document for the Car.  This will specify the various
+functionality capabilities of the expected result.
+
+The Car must provide transportation for humans, pets, and things from one
+location to another.  The requirements here are specified in relation to this
+overall functional specification.
+
+
+Turning the Car on and off
+--------------------------
+
+Requirement C-Req-1: It must be possible to start the car in order to drive it to
+another location.  A started car will have a running engine, and all electronics
+associated with motion and control of the car itself will be in an operational
+state.
+
+Requirement C-Req-2: It must be possible to stop the car when the destination has
+been reached or at any other time when the car will not be actively driven.  This
+will halt the engine and shut-off all operational controls if the car, although
+it may not affect auxiliary functionality of the car.  It should be safe to exit
+the car and leave the area when in the stopped state and return to the car later
+to use it again.
+
+
+There are various elements of the car designed to facilitate the user operation
+of the car by the Driver.
+
+Requirement IGN.1: It should be possible to start the car by pushing the
+start/stop button.
+
+Requirement IGN.2: It should be possible to stop the car when it is stopped by
+pushing and holding the start/stop button for 3 seconds.
+
+Requirement IGN.3: It should not be possible to stop the car when it is in motion.
+
+
+Luxury Car features
+-------------------
+
+Some cars are also equipped with an alarm system; this is the Luxury
+configuration of the car.  The alarm system is designed to prevent the car from
+being stolen.
+
+Requirement ALRM-1: It should be possible to enable the alarm by pressing the alarm button for 1 second.
+
+Requirement ALRM-2: It should be possible to enable the alarm only when the car
+is stopped.
+
+Requirement ALRM-3: When enabled the alarm should generate an alert (by blinking
+the lights, sounding the horn, or other mechanisms) when triggered.
+
+Requirement ALRM-4: The alarm can be shutoff by holding the alarm button for 3
+seconds as long as it has not been triggered.
+
+Requirement C-ALM-4: A triggered alarm can only be shutoff by performing the
+shutoff action 3 times in rapid succession.
+
+Requirement C-ALM-5: A triggered alarm will prevent starting the car, and will
+initiate a stop and shutdown of the car if it is not already stopped.
+
+Requirement C-ALM-6: A triggered alarm will stop generating an alert after a
+short period of time, but will still prevent the starting/use of the car until
+disabled.

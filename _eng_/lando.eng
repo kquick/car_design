@@ -23,6 +23,13 @@ doc =
     abstract =
       Details on the conversion from Lando to Fret
     location = doc/lando2fret.org
+  requirements
+    type = requirements
+    title = Car requirements documentation
+    location = requirements.txt
+    abstract =
+      Customer-supplied requirements for design and implementation of the Car to
+      be delivered by this process.
     
 run =
   subcmd =
