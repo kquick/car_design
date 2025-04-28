@@ -1,0 +1,159 @@
+subsystem Car
+This is a Car.
+
+contains
+
+  // ----------------------------------------------------------------------
+  subsystem Starter
+  This is the electronics and motor used to start the engine of the car
+  and prepare it for driving.
+
+  scenarios starter_state Values
+
+      Started // k
+      The car is started.
+
+      Starting // d
+      The car is being started by the Starter.
+
+      Stopping // b
+      The car is currently shutting down.
+
+      Off // x
+      Engine and Starter and all other Car components are off.
+
+  // ------------------------------------------------------------
+  // System triggers
+
+  events Console operational triggers
+
+      start_button
+      The button pushed to start or stop the car.
+
+  // component in_park
+  //     The gear selector is in Park and the Car is not moving.
+  //     If the gear selector is not in Park, the Car can be assumed to be
+  //     moving.
+
+  //     FRET Input var.
+  //     FRET : boolean.
+
+  component braking
+      The brakes are applied.
+
+      FRET Input var.
+      FRET : boolean.
+
+  component is_moving
+    Is true if the Car could be moving.
+
+      FRET Output var.
+      FRET : boolean.
+
+  // ------------------------------------------------------------
+  // Starter requirements.
+  //
+  // All general requirements are at the top level and reference the "Car"
+  // itself: FRET variables are associated with individual FRET components and
+  // cannot refer to states/events in other components; we may wish to evaluate
+  // the wholistic functionality of several subsystems working together, thus the
+  // reference to "Car" rather than the individual subsystem.
+
+  requirement Start
+    The car can be started by pressing the start button.
+
+    indexing
+      source: IGN.1 from Car.Manual
+      FRET: upon start_button & Off the Car shall immediately satisfy Starting.
+
+  requirement Stop
+    The car can be stopped if it is on and not moving by pressing the start
+    button for 3 seconds.
+
+    indexing
+      source: IGN.3 from Car.Manual
+      FRET: upon !Off & !is_moving & persisted(2, start_button)
+            the Car shall eventually satisfy Off.
+
+  requirement Braking
+    The brakes will stop the car from moving.
+
+    indexing
+      FRET: upon braking the Car shall at the next timepoint satisfy !is_moving
+
+  // ----------------------------------------------------------------------
+  subsystem Alarm
+  This is a component that reacts to attempts to steal the car by emitting
+  a loud noise and disabling the car.  The car should remain disabled until
+  the authorized user resets the alarm.
+
+  scenarios alarm_state Values
+
+      alarm_disabled // n
+      The Alarm is disabled and will not generate an alarm even if a trigger
+      event occurs.
+
+      alarm_enabled // y
+      The Alarm is enabled but not indicating an alarm state.
+
+      alarm_warning
+      The Alarm is giving an initial warning but is not yet going off.
+
+      alarm_alarming // p?
+      The Alarm is indicating an alarm condition via sounds, lights, and
+      other means.
+
+      alarm_halting_car // m
+      This is the state where the Alarm is active (sounding) and is in the
+      process of halting the other Car systems.
+
+      alarm_hold // g?
+      The Alarm was active and halted the Car.  The Alarm is holding the Car
+      in the halted state due to the Alarm action.
+
+  // ------------------------------------------------------------
+  // System triggers
+
+  events Alarm-related triggers
+
+      alarm_button
+      User button pressed to control the state of the Alarm.
+
+      // enable_alarm
+      // Trigger to enable the Alarm.
+
+      // disable_alarm
+      // Trigger to disable the Alarm such that it does not generate alarms.
+
+      // reset_alarm
+      // The alarm has been reset by an authorized action.
+
+      trigger_alarm
+      The trigger for the Alarm.  If true, this means that trouble is afoot
+      and the Alarm should be sounded.
+
+  // ----------------------------------------------------------------------
+  // Alarm requirements.  An Alarm is available on the Luxury version of the car.
+
+  requirement (Luxury) ALRM-1
+    The alarm can be turned on by pressing the alarm button.
+
+    indexing
+      FRET: upon alarm_disabled & alarm_button the Car shall at the next timepoint satisfy alarm_enabled.
+
+  requirement (Luxury) ALRM-2
+    The alarm can be turned off by pressing pressing the alarm_button for 2
+    seconds.
+
+    indexing
+      FRET: upon alarm_enabled & persisted(1, alarm_button) the Car shall at the next timepoint satisfy alarm_disabled.
+
+  requirement (Luxury) ALRM-3
+    If the alarm is triggered, it will go off until turned off.
+
+    indexing
+      FRET: upon alarm_enabled & trigger_alarm the Car shall until alarm_disabled satisfy alarm_alarming.
+      FET: Car shall always satisfy if (!alarm_enabled & enable_alarm & !reset_alarm) then alarm_enabled
+      FET: Car shall always satisfy if (alarm_enabled & trigger_alarm) then alarm_alarming
+
+end
