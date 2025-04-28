@@ -1,0 +1,31 @@
+system =
+  spec =
+    car =
+      name = Domain specification for a Car.
+      file = car.lando
+      format = lando
+      generate =
+        car.md =
+          format = markdown
+        car.json =
+          format = json
+        car_fret.json =
+          format = fret
+        car_kind2 =
+          format = fret_kind2
+        car_rack.csv =
+          format = RACK
+
+doc =
+  lando to fret =
+    type = design
+    title = Lando to Fret conversion
+    abstract =
+      Details on the conversion from Lando to Fret
+    location = doc/lando2fret.org
+    
+run =
+  subcmd =
+    car_spec_md =
+      Generate car domain model Markdown =
+        exec = nix run nixpkgs#pandoc -- car.md -o car.html
