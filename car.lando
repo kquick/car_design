@@ -31,11 +31,8 @@ contains
       start_button
       The button pushed to start or stop the car.
 
-  component braking
+      braking
       The brakes are applied.
-
-      FRET Input var.
-      FRET : boolean.
 
   component speed
     The Car could be moving.
