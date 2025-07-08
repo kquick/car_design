@@ -1,3 +1,38 @@
+dev =
+  subcmd =
+    test =
+      testcase =
+        fret_import =
+          type = KAT
+          runner = generate_fret_import
+          Input = car
+          Output = car_fret.json
+          Expected = test/KAT/car_fret.json
+        kind2_output =
+          type = KAT
+          runner = generate_fret_kind2
+          Input = car
+          Output = car_kind2
+          Expected = test/KAT/car_kind2
+        rack_output =
+          type = KAT
+          runner = generate_fret_RACK
+          Input = car
+          Output = car_rack.csv
+          Expected = test/KAT/car_rack.csv
+      testrunner =
+        generate_fret_import =
+          in dir = {TopDir}
+          exec = eng system gen {Input} &&
+                 diff {Expected} {Output}
+        generate_fret_kind2 =
+          exec = eng system validate {Input} &&
+                 diff {Expected}/Car_0.lus {Output}/Car_0.lus &&
+                 diff {Expected}/Car_1.lus {Output}/Car_1.lus
+        generate_fret_RACK =
+          exec = eng system validate {Input} &&
+                 diff {Expected} {Output}
+
 run =
   subcmd =
     car =

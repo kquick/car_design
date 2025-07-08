@@ -1,0 +1,664 @@
+[
+{
+  "objectType" : "log",
+  "level" : "info",
+  "source" : "parse",
+  "value" : "kind2 v2.3.0-96-gfbe3df4-dirty"
+}
+,
+{
+  "objectType" : "kind2Options",
+  "enabled" :
+  [
+    "contractck"
+  ],
+  "timeout" : 60.000000,
+  "bmcMax" : 0,
+  "compositional" : false,
+  "modular" : false
+}
+,
+{
+  "objectType" : "analysisStart",
+  "top" : "Car_2",
+  "context" : "environment"
+}
+,
+{
+  "objectType" : "realizabilityCheck",
+  "runtime" : {"unit" : "sec", "timeout" : false, "value" : 0.000},
+  "result" : "realizable"
+}
+,
+{"objectType" : "analysisStop"}
+,
+{
+  "objectType" : "analysisStart",
+  "top" : "Car_2",
+  "context" : "contract"
+}
+,
+{
+  "objectType" : "realizabilityCheck",
+  "runtime" : {"unit" : "sec", "timeout" : false, "value" : 0.315},
+  "result" : "realizable"
+}
+,
+{"objectType" : "analysisStop"}
+,
+{
+  "objectType" : "analysisStart",
+  "top" : "SIT",
+  "context" : "environment"
+}
+,
+{
+  "objectType" : "realizabilityCheck",
+  "runtime" : {"unit" : "sec", "timeout" : false, "value" : 0.000},
+  "result" : "realizable"
+}
+,
+{"objectType" : "analysisStop"}
+,
+{
+  "objectType" : "analysisStart",
+  "top" : "SIT",
+  "context" : "contract"
+}
+,
+{
+  "objectType" : "realizabilityCheck",
+  "runtime" : {"unit" : "sec", "timeout" : false, "value" : 0.000},
+  "result" : "realizable"
+}
+,
+{"objectType" : "analysisStop"}
+,
+{
+  "objectType" : "analysisStart",
+  "top" : "ST",
+  "context" : "environment"
+}
+,
+{
+  "objectType" : "realizabilityCheck",
+  "runtime" : {"unit" : "sec", "timeout" : false, "value" : 0.000},
+  "result" : "realizable"
+}
+,
+{"objectType" : "analysisStop"}
+,
+{
+  "objectType" : "analysisStart",
+  "top" : "ST",
+  "context" : "contract"
+}
+,
+{
+  "objectType" : "realizabilityCheck",
+  "runtime" : {"unit" : "sec", "timeout" : false, "value" : 0.000},
+  "result" : "realizable"
+}
+,
+{"objectType" : "analysisStop"}
+,
+{
+  "objectType" : "analysisStart",
+  "top" : "HT",
+  "context" : "environment"
+}
+,
+{
+  "objectType" : "realizabilityCheck",
+  "runtime" : {"unit" : "sec", "timeout" : false, "value" : 0.000},
+  "result" : "realizable"
+}
+,
+{"objectType" : "analysisStop"}
+,
+{
+  "objectType" : "analysisStart",
+  "top" : "HT",
+  "context" : "contract"
+}
+,
+{
+  "objectType" : "realizabilityCheck",
+  "runtime" : {"unit" : "sec", "timeout" : false, "value" : 0.000},
+  "result" : "realizable"
+}
+,
+{"objectType" : "analysisStop"}
+,
+{
+  "objectType" : "analysisStart",
+  "top" : "OT",
+  "context" : "environment"
+}
+,
+{
+  "objectType" : "realizabilityCheck",
+  "runtime" : {"unit" : "sec", "timeout" : false, "value" : 0.000},
+  "result" : "realizable"
+}
+,
+{"objectType" : "analysisStop"}
+,
+{
+  "objectType" : "analysisStart",
+  "top" : "OT",
+  "context" : "contract"
+}
+,
+{
+  "objectType" : "realizabilityCheck",
+  "runtime" : {"unit" : "sec", "timeout" : false, "value" : 0.000},
+  "result" : "realizable"
+}
+,
+{"objectType" : "analysisStop"}
+,
+{
+  "objectType" : "analysisStart",
+  "top" : "minReal",
+  "context" : "environment"
+}
+,
+{
+  "objectType" : "realizabilityCheck",
+  "runtime" : {"unit" : "sec", "timeout" : false, "value" : 0.000},
+  "result" : "realizable"
+}
+,
+{"objectType" : "analysisStop"}
+,
+{
+  "objectType" : "analysisStart",
+  "top" : "minReal",
+  "context" : "contract"
+}
+,
+{
+  "objectType" : "realizabilityCheck",
+  "runtime" : {"unit" : "sec", "timeout" : false, "value" : 0.000},
+  "result" : "realizable"
+}
+,
+{"objectType" : "analysisStop"}
+,
+{
+  "objectType" : "analysisStart",
+  "top" : "minInt",
+  "context" : "environment"
+}
+,
+{
+  "objectType" : "realizabilityCheck",
+  "runtime" : {"unit" : "sec", "timeout" : false, "value" : 0.000},
+  "result" : "realizable"
+}
+,
+{"objectType" : "analysisStop"}
+,
+{
+  "objectType" : "analysisStart",
+  "top" : "minInt",
+  "context" : "contract"
+}
+,
+{
+  "objectType" : "realizabilityCheck",
+  "runtime" : {"unit" : "sec", "timeout" : false, "value" : 0.000},
+  "result" : "realizable"
+}
+,
+{"objectType" : "analysisStop"}
+,
+{
+  "objectType" : "analysisStart",
+  "top" : "maxInt",
+  "context" : "environment"
+}
+,
+{
+  "objectType" : "realizabilityCheck",
+  "runtime" : {"unit" : "sec", "timeout" : false, "value" : 0.000},
+  "result" : "realizable"
+}
+,
+{"objectType" : "analysisStop"}
+,
+{
+  "objectType" : "analysisStart",
+  "top" : "maxInt",
+  "context" : "contract"
+}
+,
+{
+  "objectType" : "realizabilityCheck",
+  "runtime" : {"unit" : "sec", "timeout" : false, "value" : 0.000},
+  "result" : "realizable"
+}
+,
+{"objectType" : "analysisStop"}
+,
+{
+  "objectType" : "analysisStart",
+  "top" : "maxReal",
+  "context" : "environment"
+}
+,
+{
+  "objectType" : "realizabilityCheck",
+  "runtime" : {"unit" : "sec", "timeout" : false, "value" : 0.000},
+  "result" : "realizable"
+}
+,
+{"objectType" : "analysisStop"}
+,
+{
+  "objectType" : "analysisStart",
+  "top" : "maxReal",
+  "context" : "contract"
+}
+,
+{
+  "objectType" : "realizabilityCheck",
+  "runtime" : {"unit" : "sec", "timeout" : false, "value" : 0.000},
+  "result" : "realizable"
+}
+,
+{"objectType" : "analysisStop"}
+,
+{
+  "objectType" : "analysisStart",
+  "top" : "absInt",
+  "context" : "environment"
+}
+,
+{
+  "objectType" : "realizabilityCheck",
+  "runtime" : {"unit" : "sec", "timeout" : false, "value" : 0.000},
+  "result" : "realizable"
+}
+,
+{"objectType" : "analysisStop"}
+,
+{
+  "objectType" : "analysisStart",
+  "top" : "absInt",
+  "context" : "contract"
+}
+,
+{
+  "objectType" : "realizabilityCheck",
+  "runtime" : {"unit" : "sec", "timeout" : false, "value" : 0.000},
+  "result" : "realizable"
+}
+,
+{"objectType" : "analysisStop"}
+,
+{
+  "objectType" : "analysisStart",
+  "top" : "absReal",
+  "context" : "environment"
+}
+,
+{
+  "objectType" : "realizabilityCheck",
+  "runtime" : {"unit" : "sec", "timeout" : false, "value" : 0.000},
+  "result" : "realizable"
+}
+,
+{"objectType" : "analysisStop"}
+,
+{
+  "objectType" : "analysisStart",
+  "top" : "absReal",
+  "context" : "contract"
+}
+,
+{
+  "objectType" : "realizabilityCheck",
+  "runtime" : {"unit" : "sec", "timeout" : false, "value" : 0.000},
+  "result" : "realizable"
+}
+,
+{"objectType" : "analysisStop"}
+,
+{
+  "objectType" : "analysisStart",
+  "top" : "ZtoPre",
+  "context" : "environment"
+}
+,
+{
+  "objectType" : "realizabilityCheck",
+  "runtime" : {"unit" : "sec", "timeout" : false, "value" : 0.000},
+  "result" : "realizable"
+}
+,
+{"objectType" : "analysisStop"}
+,
+{
+  "objectType" : "analysisStart",
+  "top" : "ZtoPre",
+  "context" : "contract"
+}
+,
+{
+  "objectType" : "realizabilityCheck",
+  "runtime" : {"unit" : "sec", "timeout" : false, "value" : 0.000},
+  "result" : "realizable"
+}
+,
+{"objectType" : "analysisStop"}
+,
+{
+  "objectType" : "analysisStart",
+  "top" : "YtoPre",
+  "context" : "environment"
+}
+,
+{
+  "objectType" : "realizabilityCheck",
+  "runtime" : {"unit" : "sec", "timeout" : false, "value" : 0.000},
+  "result" : "realizable"
+}
+,
+{"objectType" : "analysisStop"}
+,
+{
+  "objectType" : "analysisStart",
+  "top" : "YtoPre",
+  "context" : "contract"
+}
+,
+{
+  "objectType" : "realizabilityCheck",
+  "runtime" : {"unit" : "sec", "timeout" : false, "value" : 0.000},
+  "result" : "realizable"
+}
+,
+{"objectType" : "analysisStop"}
+,
+{
+  "objectType" : "analysisStart",
+  "top" : "preBool",
+  "context" : "environment"
+}
+,
+{
+  "objectType" : "realizabilityCheck",
+  "runtime" : {"unit" : "sec", "timeout" : false, "value" : 0.000},
+  "result" : "realizable"
+}
+,
+{"objectType" : "analysisStop"}
+,
+{
+  "objectType" : "analysisStart",
+  "top" : "preBool",
+  "context" : "contract"
+}
+,
+{
+  "objectType" : "realizabilityCheck",
+  "runtime" : {"unit" : "sec", "timeout" : false, "value" : 0.000},
+  "result" : "realizable"
+}
+,
+{"objectType" : "analysisStop"}
+,
+{
+  "objectType" : "analysisStart",
+  "top" : "preReal",
+  "context" : "environment"
+}
+,
+{
+  "objectType" : "realizabilityCheck",
+  "runtime" : {"unit" : "sec", "timeout" : false, "value" : 0.000},
+  "result" : "realizable"
+}
+,
+{"objectType" : "analysisStop"}
+,
+{
+  "objectType" : "analysisStart",
+  "top" : "preReal",
+  "context" : "contract"
+}
+,
+{
+  "objectType" : "realizabilityCheck",
+  "runtime" : {"unit" : "sec", "timeout" : false, "value" : 0.000},
+  "result" : "realizable"
+}
+,
+{"objectType" : "analysisStop"}
+,
+{
+  "objectType" : "analysisStart",
+  "top" : "preInt",
+  "context" : "environment"
+}
+,
+{
+  "objectType" : "realizabilityCheck",
+  "runtime" : {"unit" : "sec", "timeout" : false, "value" : 0.000},
+  "result" : "realizable"
+}
+,
+{"objectType" : "analysisStop"}
+,
+{
+  "objectType" : "analysisStart",
+  "top" : "preInt",
+  "context" : "contract"
+}
+,
+{
+  "objectType" : "realizabilityCheck",
+  "runtime" : {"unit" : "sec", "timeout" : false, "value" : 0.000},
+  "result" : "realizable"
+}
+,
+{"objectType" : "analysisStop"}
+,
+{
+  "objectType" : "analysisStart",
+  "top" : "delay",
+  "context" : "environment"
+}
+,
+{
+  "objectType" : "realizabilityCheck",
+  "runtime" : {"unit" : "sec", "timeout" : false, "value" : 0.000},
+  "result" : "realizable"
+}
+,
+{"objectType" : "analysisStop"}
+,
+{
+  "objectType" : "analysisStart",
+  "top" : "delay",
+  "context" : "contract"
+}
+,
+{
+  "objectType" : "realizabilityCheck",
+  "runtime" : {"unit" : "sec", "timeout" : false, "value" : 0.000},
+  "result" : "realizable"
+}
+,
+{"objectType" : "analysisStop"}
+,
+{
+  "objectType" : "analysisStart",
+  "top" : "OTlore",
+  "context" : "environment"
+}
+,
+{
+  "objectType" : "realizabilityCheck",
+  "runtime" : {"unit" : "sec", "timeout" : false, "value" : 0.000},
+  "result" : "realizable"
+}
+,
+{"objectType" : "analysisStop"}
+,
+{
+  "objectType" : "analysisStart",
+  "top" : "OTlore",
+  "context" : "contract"
+}
+,
+{
+  "objectType" : "realizabilityCheck",
+  "runtime" : {"unit" : "sec", "timeout" : false, "value" : 0.000},
+  "result" : "realizable"
+}
+,
+{"objectType" : "analysisStop"}
+,
+{
+  "objectType" : "analysisStart",
+  "top" : "O",
+  "context" : "environment"
+}
+,
+{
+  "objectType" : "realizabilityCheck",
+  "runtime" : {"unit" : "sec", "timeout" : false, "value" : 0.000},
+  "result" : "realizable"
+}
+,
+{"objectType" : "analysisStop"}
+,
+{
+  "objectType" : "analysisStart",
+  "top" : "O",
+  "context" : "contract"
+}
+,
+{
+  "objectType" : "realizabilityCheck",
+  "runtime" : {"unit" : "sec", "timeout" : false, "value" : 0.000},
+  "result" : "realizable"
+}
+,
+{"objectType" : "analysisStop"}
+,
+{
+  "objectType" : "analysisStart",
+  "top" : "S",
+  "context" : "environment"
+}
+,
+{
+  "objectType" : "realizabilityCheck",
+  "runtime" : {"unit" : "sec", "timeout" : false, "value" : 0.000},
+  "result" : "realizable"
+}
+,
+{"objectType" : "analysisStop"}
+,
+{
+  "objectType" : "analysisStart",
+  "top" : "S",
+  "context" : "contract"
+}
+,
+{
+  "objectType" : "realizabilityCheck",
+  "runtime" : {"unit" : "sec", "timeout" : false, "value" : 0.000},
+  "result" : "realizable"
+}
+,
+{"objectType" : "analysisStop"}
+,
+{
+  "objectType" : "analysisStart",
+  "top" : "SI",
+  "context" : "environment"
+}
+,
+{
+  "objectType" : "realizabilityCheck",
+  "runtime" : {"unit" : "sec", "timeout" : false, "value" : 0.000},
+  "result" : "realizable"
+}
+,
+{"objectType" : "analysisStop"}
+,
+{
+  "objectType" : "analysisStart",
+  "top" : "SI",
+  "context" : "contract"
+}
+,
+{
+  "objectType" : "realizabilityCheck",
+  "runtime" : {"unit" : "sec", "timeout" : false, "value" : 0.000},
+  "result" : "realizable"
+}
+,
+{"objectType" : "analysisStop"}
+,
+{
+  "objectType" : "analysisStart",
+  "top" : "H",
+  "context" : "environment"
+}
+,
+{
+  "objectType" : "realizabilityCheck",
+  "runtime" : {"unit" : "sec", "timeout" : false, "value" : 0.000},
+  "result" : "realizable"
+}
+,
+{"objectType" : "analysisStop"}
+,
+{
+  "objectType" : "analysisStart",
+  "top" : "H",
+  "context" : "contract"
+}
+,
+{
+  "objectType" : "realizabilityCheck",
+  "runtime" : {"unit" : "sec", "timeout" : false, "value" : 0.000},
+  "result" : "realizable"
+}
+,
+{"objectType" : "analysisStop"}
+,
+{
+  "objectType" : "analysisStart",
+  "top" : "starter_state__T",
+  "context" : "type"
+}
+,
+{
+  "objectType" : "realizabilityCheck",
+  "runtime" : {"unit" : "sec", "timeout" : false, "value" : 0.000},
+  "result" : "realizable"
+}
+,
+{"objectType" : "analysisStop"}
+,
+{
+  "objectType" : "analysisStart",
+  "top" : "alarm__T",
+  "context" : "type"
+}
+,
+{
+  "objectType" : "realizabilityCheck",
+  "runtime" : {"unit" : "sec", "timeout" : false, "value" : 0.000},
+  "result" : "realizable"
+}
+,
+{"objectType" : "analysisStop"}
+]
