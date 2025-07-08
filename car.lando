@@ -37,8 +37,14 @@ contains
   component speed
     The Car could be moving.
 
-      FRET Output var.
+      FRET Input var.
       FRET : integer.
+
+  component brake_lights
+    Indicators that the car is braking.
+
+    FRET Output var.
+    FRET : boolean.
 
   // ------------------------------------------------------------
   // Starter requirements.
@@ -46,7 +52,7 @@ contains
   // All general requirements are at the top level and reference the "Car"
   // itself: FRET variables are associated with individual FRET components and
   // cannot refer to states/events in other components; we may wish to evaluate
-  // the wholistic functionality of several subsystems working together, thus the
+  // the holistic functionality of several subsystems working together, thus the
   // reference to "Car" rather than the individual subsystem.
 
   requirement Start
@@ -56,23 +62,33 @@ contains
       source: IGN.1 from requirements.txt
       source: C-Req-1 from requirements.txt
       FRET: upon start_button & Off the Car shall immediately satisfy Starting.
+      Note: Sometimes the car's lights are lit during the starting process. This
+            next fretish statement can be enabled to showcase a requirements
+            realizability problem.
+      _FRET: upon Starting the Car shall immediately satisfy brake_lights.
 
-  requirement Stop
-    The car can be stopped if it is on and not moving by pressing the start
+  requirement Shutdown
+    The car can be turned off if it is on and not moving by pressing the start
     button for 3 seconds.
 
     indexing
       source: IGN.2 from requirements.txt
       source: C-Req-2 from requirements.txt
-      FRET: upon !Off & (speed = 0) & persisted(2, start_button)
-            the Car shall eventually satisfy Off.
+      FRET: upon (!Off) & (speed = 0) & persisted(2, start_button)
+            the Car shall immediately satisfy Off.
+
+  // ----------------------------------------------------------------------
+  // Braking requirements
 
   requirement Braking
-    The brakes will stop the car from moving.
+    The brake lights will indicate when the car is braking.
 
     indexing
-      FRET: upon braking the Car shall at the next timepoint
-            satisfy speed = 0. // intMax(0, speed - 10).
+      FRET: upon braking the Car shall immediately satisfy brake_lights.
+      FRET: upon persisted(1, !braking)
+            the Car shall immediately
+            satisfy !brake_lights.
+
 
   // ----------------------------------------------------------------------
   subsystem Alarm
