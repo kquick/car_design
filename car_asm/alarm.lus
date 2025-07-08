@@ -1,0 +1,18 @@
+node alarm_system (alarm : alarm__T;
+                   alarm_button: bool;
+                   starter_state: starter_state__T)
+returns (alarm__NXT : alarm__T);
+var btn_pre : bool;
+var btn_pre_pre : bool;
+let
+  btn_pre = false -> pre alarm_button;
+  btn_pre_pre = false -> pre btn_pre;
+  alarm__NXT =
+    if alarm_button and (alarm = alarm_disabled) and (starter_state = Off)
+    then alarm_enabled
+    else
+      if (alarm = alarm_enabled) and btn_pre and btn_pre_pre
+      then alarm_disabled
+      else alarm;
+tel
+  

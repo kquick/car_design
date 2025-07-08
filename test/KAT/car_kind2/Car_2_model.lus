@@ -81,34 +81,58 @@ type starter_state__T = enum { Started, Starting, Off };
 type alarm__T = enum { alarm_disabled, alarm_enabled };
 
 ----------------------------------------------------------------------
-contract Car_1Spec( braking : bool )
-returns ( brake_lights : bool );
+contract Car_2Spec( starter_state : starter_state__T;
+                    alarm : alarm__T;
+                    alarm_button : bool )
+returns ( alarm__NXT : alarm__T );
 let
   
   
-  (* Req: upon persisted(1, (! braking)) the Car shall immediately satisfy (! brake_lights). *)
+  mode alarm__NXT_alarm_disabled ( require alarm__NXT = alarm_disabled; );
+  mode alarm__NXT_alarm_enabled ( require alarm__NXT = alarm_enabled; );
+  (* Req: upon ((alarm = alarm_enabled) & persisted(2, alarm_button)) the Car shall immediately satisfy (alarm__NXT = alarm_disabled). *)
 
-  var Braking_1 : bool = H((((HT(1, 0, (not braking)) and HT((1 - 1), 0, (not ZtoPre(false)))) and ZtoPre((not (HT(1, 0, (not braking)) and HT((1 - 1), 0, (not ZtoPre(false))))))) => (not brake_lights)));
-
-
-  (* Req: upon braking the Car shall immediately satisfy brake_lights. *)
-
-  var Braking : bool = H(((braking and ZtoPre((not braking))) => brake_lights));
+  var ALRM_4 : bool = H(((((alarm = alarm_enabled) and (HT(2, 0, alarm_button) and HT((2 - 1), 0, (not ZtoPre(false))))) and ZtoPre((not ((alarm = alarm_enabled) and (HT(2, 0, alarm_button) and HT((2 - 1), 0, (not ZtoPre(false)))))))) => (alarm__NXT = alarm_disabled)));
 
 
-  guarantee "Braking-1" Braking_1;
-  guarantee "Braking" Braking;
+  (* Req: upon ((alarm = alarm_disabled) & (alarm_button & (starter_state = Off))) the Car shall immediately satisfy (alarm__NXT = alarm_enabled). *)
+
+  var ALRM_1 : bool = H(((((alarm = alarm_disabled) and (alarm_button and (starter_state = Off))) and ZtoPre((not ((alarm = alarm_disabled) and (alarm_button and (starter_state = Off)))))) => (alarm__NXT = alarm_enabled)));
+
+
+  guarantee "ALRM-4" ALRM_4;
+  guarantee "ALRM-1" ALRM_1;
 tel
 
 ----------------------------------------------------------------------
-node Car_1 ( braking : bool )
-returns ( brake_lights : bool );
+node Car_2 ( starter_state : starter_state__T;
+                    alarm : alarm__T;
+                    alarm_button : bool )
+returns ( alarm__NXT : alarm__T );
   (*@contract
-     import Car_1Spec(braking)
-            returns (brake_lights);
+     import Car_2Spec(starter_state, alarm, alarm_button)
+            returns (alarm__NXT);
   *)
 let
   --%MAIN;
-  
+    alarm__NXT = alarm_system(alarm, alarm_button, starter_state);
 tel
 
+node alarm_system (alarm : alarm__T;
+                   alarm_button: bool;
+                   starter_state: starter_state__T)
+returns (alarm__NXT : alarm__T);
+var btn_pre : bool;
+var btn_pre_pre : bool;
+let
+  btn_pre = false -> pre alarm_button;
+  btn_pre_pre = false -> pre btn_pre;
+  alarm__NXT =
+    if alarm_button and (alarm = alarm_disabled) and (starter_state = Off)
+    then alarm_enabled
+    else
+      if (alarm = alarm_enabled) and btn_pre and btn_pre_pre
+      then alarm_disabled
+      else alarm;
+tel
+  

@@ -1,0 +1,18 @@
+node starter_sys (start_button : bool;
+                  starter_state : starter_state__T;
+                  speed : int)
+returns (starter_state__NXT : starter_state__T);
+var start_pre : bool;
+var start_pre2 : bool;
+let
+  start_pre = false -> pre start_button;
+  start_pre2 = false -> start_pre;
+    
+  starter_state__NXT =
+    if ((starter_state = Off) and start_button)
+    then Starting
+    else
+      if (start_button and start_pre and start_pre2)
+      then Off
+      else starter_state;
+tel

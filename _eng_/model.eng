@@ -1,0 +1,11 @@
+system
+  model
+    kind2 =
+      starter_sys =
+        output = starter_state__NXT
+        inputs = start_button, starter_state, speed
+        file = car_asm/starter.lus
+      alarm_system =
+        output = alarm__NXT
+        inputs = alarm, alarm_button, starter_state
+        file = car_asm/alarm.lus
