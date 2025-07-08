@@ -1,0 +1,6 @@
+run
+  subcmd
+    run
+      Run the Car executable
+        exec = nix run nixpkgs#python3 -- python_impl/Car.py
+        
