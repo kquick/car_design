@@ -52,6 +52,7 @@ default.nix
 .idea
 
 test/examples/*/out
+archive
 
 # MacOS
 .DS_Store
