@@ -16,9 +16,9 @@ contains
       Starting
       The car is being started by the Starter.
 
-      Shutting_down
-      The car is currently shutting down.  It is assumed that there is
-      a process for this and that it does not occur instantly.
+      // Shutting_down
+      // The car is currently shutting down.  It is assumed that there is
+      // a process for this and that it does not occur instantly.
 
       Off
       Engine and Starter and all other Car components are off.
@@ -105,20 +105,20 @@ contains
       alarm_enabled
       The Alarm is enabled but not indicating an alarm state.
 
-      alarm_warning
-      The Alarm is giving an initial warning but is not yet going off.
+      // alarm_warning
+      // The Alarm is giving an initial warning but is not yet going off.
 
-      alarm_alarming
-      The Alarm is indicating an alarm condition via sounds, lights, and
-      other means.
+      // alarm_alarming
+      // The Alarm is indicating an alarm condition via sounds, lights, and
+      // other means.
 
-      alarm_halting_car
-      This is the state where the Alarm is active (sounding) and is in the
-      process of halting the other Car systems.
+      // alarm_halting_car
+      // This is the state where the Alarm is active (sounding) and is in the
+      // process of halting the other Car systems.
 
-      alarm_hold // g?
-      The Alarm was active and halted the Car.  The Alarm is holding the Car
-      in the halted state due to the Alarm action.
+      // alarm_hold // g?
+      // The Alarm was active and halted the Car.  The Alarm is holding the Car
+      // in the halted state due to the Alarm action.
 
   // ------------------------------------------------------------
   // System triggers
