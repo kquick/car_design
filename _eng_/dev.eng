@@ -20,6 +20,15 @@ dev =
           Input = car
           Output = car_rack.csv
           Expected = test/KAT/car_rack.csv
+        car_traces =
+          type = EXE
+          runner = test_case_runner
+        trace_output =
+          type = KAT
+          runner = generate_traces
+          Input = car
+          Output = test/traces
+          Expected = test/KAT/traces
       testrunner =
         generate_fret_import =
           in dir = {TopDir}
@@ -27,17 +36,33 @@ dev =
                  diff {Expected} {Output}
         generate_fret_kind2 =
           exec = eng system validate {Input} &&
-                 diff {Expected}/Car_0.lus {Output}/Car_0.lus &&
+                 diff {Expected}/Car_0_model.lus {Output}/Car_0_model.lus &&
+                 diff {Expected}/Car_1.lus {Output}/Car_1.lus &&
+                 diff {Expected}/Car_2_model.lus {Output}/Car_2_model.lus
+        generate_traces =
+          exec = eng system gen {Input} &&
+                 diff {Expected}/Car_0_model.lus {Output}/Car_0_model.lus &&
+                 diff {Expected}/Car_2_model.lus {Output}/Car_2_model.lus &&
                  diff {Expected}/Car_1.lus {Output}/Car_1.lus
         generate_fret_RACK =
           exec = eng system validate {Input} &&
                  diff {Expected} {Output}
+        test_case_runner =
+          nix shell pkgs = nixpkgs#python3
+                           nixpkgs#cargo
+                           nixpkgs#rustc
+                           nixpkgs#gcc
+          exec =
+             # cd test /traces/Car_0/oracle
+             # cargo run -- --car_0
+             python3 python_impl/test_car_cases.py car_kind2/Car_*.lus.out/Car_*/tests/unit
 
 run =
   subcmd =
     car =
       Run the Car executable =
-        exec = nix run nixpkgs#python3 -- python_impl/Car.py
+        nix shell pkgs = nixpkgs#python3
+        exec = python3 python_impl/Car.py
     testgen =
       Generate tests from kind2 contracts =
         exec = kind2 --testgen true car_kind2/Car_0.lus

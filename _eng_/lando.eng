@@ -15,6 +15,10 @@ system =
           format = fret_kind2
         car_rack.csv =
           format = RACK
+        car_reqs.txt =
+          format = fret-summary
+        test/traces =
+          format = test_traces
 
 doc =
   lando to fret =

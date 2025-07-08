@@ -1,0 +1,147 @@
+--Historically: X has always been true
+-- As soon as X is false once, Y will be false forever
+-- (falling edge)
+node H(X:bool) returns (Y:bool);
+let
+    Y = X -> (X and (pre Y));
+tel
+
+
+-- Timed Historically: general case
+-- True if X has been true, and for R ticks afterwards, false thereafter
+-- Always true for at least R ticks of the timeline, even if X is never true
+-- L is ignored
+node HT( L: int;  R: int; X: bool) returns (Y: bool);
+let
+  Y = not OT(L, R, not X);
+tel
+
+
+--Timed Once: general case
+-- True R ticks after each X first true until L ticks after X is last true
+node OT( L: int;  R: int; X: bool) returns (Y: bool);
+var  D:bool;
+let
+  D=delay(X, R);
+  Y=OTlore(L-R, D);
+tel
+
+
+node delay(X:bool;  R:int) returns(Y:bool);
+var X1, X2, X3, X4, X5, X6, X7, X8, X9, X10 : bool;
+let
+  Y = if (R=0) then X
+      else (if (R=1) then X1
+      else (if (R=2) then X2
+      else (if (R=3) then X3
+      else (if (R=4) then X4
+      else (if (R=5) then X5
+      else (if (R=6) then X6
+      else (if (R=7) then X7
+      else (if (R=8) then X8
+      else (if (R=9) then X9
+      else (if (R=10) then X10
+      else false (* n.b. only handles R <= 10 *)
+      ))))))))));
+  X1 = false -> pre X;
+  X2 = false -> pre X1;
+  X3 = false -> pre X2;
+  X4 = false -> pre X3;
+  X5 = false -> pre X4;
+  X6 = false -> pre X5;
+  X7 = false -> pre X6;
+  X8 = false -> pre X7;
+  X9 = false -> pre X8;
+  X10 = false -> pre X9;
+tel
+
+
+--Timed Once: less than or equal to N
+--  True every X and for N ticks afterward
+node OTlore( N: int; X: bool) returns (Y: bool);
+    var C:int;
+let
+    C = if X then 0
+        else (-1 -> pre C + (if pre C <0 then 0 else 1));
+
+    Y = 0 <= C and C <= N;
+tel
+
+
+-- The equivalent of LTL Z in Lustre.
+--   Initially true, then the previous value of X (true, delay X by one)
+node ZtoPre(X: bool) returns (Y:bool);
+let
+  Y = true -> pre X;
+tel
+
+
+
+type starter_state__T = int;
+type alarm__T = int;
+const alarm_disabled : int = 0;
+const alarm_enabled : int = 1;
+const Started : int = 0;
+const Starting : int = 1;
+const Off : int = 2;
+
+----------------------------------------------------------------------
+contract Car_0Spec( start_button : bool;
+                    starter_state : int;
+                    speed : int )
+returns ( starter_state__NXT : int );
+let
+  
+  
+  mode starter_state__NXT_Started ( require starter_state__NXT = Started; );
+  mode starter_state__NXT_Starting ( require starter_state__NXT = Starting; );
+  mode starter_state__NXT_Off ( require starter_state__NXT = Off; );
+  assume "input state range" 0 <= starter_state and starter_state <= 2;
+  guarantee "output state range" 0 <= starter_state__NXT and starter_state__NXT <= 2;
+
+  (* Req: upon ((! (starter_state = Off)) & ((speed = 0) & persisted(2, start_button))) the Car shall immediately satisfy (starter_state__NXT = Off). *)
+
+  var Shutdown : bool = H(((((not (starter_state = Off)) and ((speed = 0) and (HT(2, 0, start_button) and HT((2 - 1), 0, (not ZtoPre(false)))))) and ZtoPre((not ((not (starter_state = Off)) and ((speed = 0) and (HT(2, 0, start_button) and HT((2 - 1), 0, (not ZtoPre(false))))))))) => (starter_state__NXT = Off)));
+
+
+  (* Req: upon (start_button & (starter_state = Off)) the Car shall immediately satisfy (starter_state__NXT = Starting). *)
+
+  var Start : bool = H((((start_button and (starter_state = Off)) and ZtoPre((not (start_button and (starter_state = Off))))) => (starter_state__NXT = Starting)));
+
+
+  guarantee "Shutdown" Shutdown;
+  guarantee "Start" Start;
+tel
+
+----------------------------------------------------------------------
+node Car_0 ( start_button : bool;
+                    starter_state : int;
+                    speed : int )
+returns ( starter_state__NXT : int );
+  (*@contract
+     import Car_0Spec(start_button, starter_state, speed)
+            returns (starter_state__NXT);
+  *)
+let
+  --%MAIN;
+    starter_state__NXT = starter_sys(start_button, starter_state, speed);
+tel
+
+node starter_sys (start_button : bool;
+                  starter_state : starter_state__T;
+                  speed : int)
+returns (starter_state__NXT : starter_state__T);
+var start_pre : bool;
+var start_pre2 : bool;
+let
+  start_pre = false -> pre start_button;
+  start_pre2 = false -> start_pre;
+    
+  starter_state__NXT =
+    if ((starter_state = Off) and start_button)
+    then Starting
+    else
+      if (start_button and start_pre and start_pre2)
+      then Off
+      else starter_state;
+tel
