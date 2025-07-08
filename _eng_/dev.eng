@@ -1,6 +1,9 @@
-run
-  subcmd
-    run
-      Run the Car executable
+run =
+  subcmd =
+    car =
+      Run the Car executable =
         exec = nix run nixpkgs#python3 -- python_impl/Car.py
-        
+    testgen =
+      Generate tests from kind2 contracts =
+        exec = kind2 --testgen true car_kind2/Car_0.lus
+
