@@ -5,6 +5,7 @@ class Car:
         self.alarm = Alarm()
         self.start_button = False
         self.braking = False
+        self.alarm_button = False
 
     def start(self):
         self.start_button = True
@@ -14,17 +15,32 @@ class Car:
 
     def _step(self):
         self.starter._step(self.start_button, self.braking)
-        self.alarm._step()
+        self.alarm._step(self.starter._state, self.alarm_button)
 
 class Alarm:
-    def _step(self): pass
+    "Finite State Machine for the alarm system"
+
+    Disabled = 0
+    Enabled = 1
+
+    def __init__(self):
+        self._state = Alarm.Disabled
+
+    def _step(self, starter_state, alarm_button):
+        self._state = Alarm.transition(self._state, starter_state, alarm_button)
+
+    @staticmethod
+    def transition(alarm,  # this is the input state; the name must match the
+                           # kind2 variable name.
+                   starter_state, alarm_button):
+        return alarm
 
 class Starter:
+    "Finite State Machine for the starter system"
 
-    Started = 3
+    Started = 0
     Starting = 1
-    Shutting_down = 2
-    Off = 0
+    Off = 2
 
     def __init__(self):
         self._state = Starter.Off
@@ -35,6 +51,7 @@ class Starter:
     @staticmethod
     def transition(inp_state, start_button, braking):
         return inp_state
+
 
 def drive_car():
     car = Car()
