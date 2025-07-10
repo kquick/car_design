@@ -9,3 +9,7 @@ system
         output = alarm__NXT
         inputs = alarm, alarm_button, starter_state
         file = car_asm/alarm.lus
+      brake_system =
+        output = brake_lights
+        inputs = braking
+        file = car_asm/brakes.lus

@@ -114,6 +114,10 @@ returns ( brake_lights : bool );
   *)
 let
   --%MAIN;
-  
+    brake_lights = brake_system(braking);
 tel
 
+node brake_system (braking : bool) returns (brake_lights : bool);
+let
+  brake_lights = braking;
+tel
