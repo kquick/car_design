@@ -522,7 +522,7 @@
     },
     {
       "_id":"CarCarOff",
-      "assignment":"(3)",
+      "assignment":"(2)",
       "completed":true,
       "component_name":"Car",
       "copilotAssignment":"",
