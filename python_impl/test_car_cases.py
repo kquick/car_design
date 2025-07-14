@@ -41,6 +41,8 @@ def run_test(transfunc, outdir, testname, test_trace):
     with open(outfpath, mode='w') as outf:
         for stepnum in range(2, len(row0)):
             stepinps = {i: tracedict[i][stepnum] for i in tracedict}
+            # Assume that the order of the values in the CSV file matches the
+            # order of the arguments to the target transition function.
             r = call(**stepinps)
             outf.write(','.join([str(e) for e in stepinps.values()]))
             outf.write(',')
@@ -50,23 +52,9 @@ def run_test(transfunc, outdir, testname, test_trace):
     print('Wrote', outfpath)
 
 
-    # tracedict = {}
-    # for row in test_trace:
-    #     tracedict[row[0], row[1]] = row[2:]
-    # sizes = map(lambda (f,t): len(f), tracedict.keys())
-    # sizes.append(len('output'))
-    # hdrs = map(lambda(s): "%%%ds" % s, sizes)
-    # hdr = ' '.intercalate(hdrs)
-    # for k in tracedict.keys():
-    #     print(k)
-    #     print('  =',tracedict[k])
-
-
 def run_tests(trans_func, in_dir, out_dir):
     files = filter(lambda f: os.path.splitext(f)[1] == '.csv',
                    os.listdir(in_dir))
-    files = list(files)
-    print('run tests on',files)
     for f in files:
         fname = os.path.join(in_dir, f)
         with open(fname, newline='') as trace_csv:
