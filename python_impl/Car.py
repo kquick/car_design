@@ -9,12 +9,12 @@ class Car:
 
     def start(self):
         self.start_button = True
-        self._step()
+        self._step(0)
         self.start_button = False
-        self._step()
+        self._step(0)
 
-    def _step(self):
-        self.starter._step(self.start_button, self.braking)
+    def _step(self, speed):
+        self.starter._step(self.start_button, speed)
         self.alarm._step(self.starter._state, self.alarm_button)
 
 class Alarm:
@@ -45,18 +45,18 @@ class Starter:
     def __init__(self):
         self._state = Starter.Off
 
-    def _step(self, start_button, braking):
-        self._state = Starter.transition(self._state, start_button, braking)
+    def _step(self, start_button, speed):
+        self._state = Starter.transition(self._state, start_button, speed)
 
     @staticmethod
-    def transition(inp_state, start_button, braking):
+    def transition(inp_state, start_button, speed):
         return inp_state
 
 
 def drive_car():
     car = Car()
     print('Starting Car')
-    car.start()
+    car.start(speed=0)
     print('Car started!')
 
 if __name__ == "__main__":
