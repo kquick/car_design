@@ -68,6 +68,14 @@ let
 tel
 
 
+-- The equivalent of LTL Y in Lustre.
+--   Initially false, then the previous value of X (false, delay X by one)
+node YtoPre(X: bool) returns (Y:bool);
+let
+  Y = false -> pre X;
+tel
+
+
 -- The equivalent of LTL Z in Lustre.
 --   Initially true, then the previous value of X (true, delay X by one)
 node ZtoPre(X: bool) returns (Y:bool);
@@ -100,7 +108,7 @@ let
   mode alarm__NXT_alarm_enabled ( require alarm__NXT = alarm_enabled; );
   (* Req: upon ((alarm = alarm_enabled) & persisted(2, alarm_button)) the Car shall immediately satisfy (alarm__NXT = alarm_disabled). *)
 
-  var ALRM_4 : bool = H(((((alarm = alarm_enabled) and (HT(2, 0, alarm_button) and HT((2 - 1), 0, (not ZtoPre(false))))) and ZtoPre((not ((alarm = alarm_enabled) and (HT(2, 0, alarm_button) and HT((2 - 1), 0, (not ZtoPre(false)))))))) => (alarm__NXT = alarm_disabled)));
+  var ALRM_4 : bool = H(((((alarm = alarm_enabled) and (HT(2, 0, alarm_button) and HT(1, 0, YtoPre(true)))) and ZtoPre((not ((alarm = alarm_enabled) and (HT(2, 0, alarm_button) and HT(1, 0, YtoPre(true))))))) => (alarm__NXT = alarm_disabled)));
 
 
   (* Req: upon ((alarm = alarm_disabled) & (alarm_button & (starter_state = Off))) the Car shall immediately satisfy (alarm__NXT = alarm_enabled). *)

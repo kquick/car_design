@@ -68,6 +68,14 @@ let
 tel
 
 
+-- The equivalent of LTL Y in Lustre.
+--   Initially false, then the previous value of X (false, delay X by one)
+node YtoPre(X: bool) returns (Y:bool);
+let
+  Y = false -> pre X;
+tel
+
+
 -- The equivalent of LTL Z in Lustre.
 --   Initially true, then the previous value of X (true, delay X by one)
 node ZtoPre(X: bool) returns (Y:bool);
@@ -94,7 +102,7 @@ let
   mode starter_state__NXT_Off ( require starter_state__NXT = Off; );
   (* Req: upon ((! (starter_state = Off)) & ((speed = 0) & persisted(2, start_button))) the Car shall immediately satisfy (starter_state__NXT = Off). *)
 
-  var Shutdown : bool = H(((((not (starter_state = Off)) and ((speed = 0) and (HT(2, 0, start_button) and HT((2 - 1), 0, (not ZtoPre(false)))))) and ZtoPre((not ((not (starter_state = Off)) and ((speed = 0) and (HT(2, 0, start_button) and HT((2 - 1), 0, (not ZtoPre(false))))))))) => (starter_state__NXT = Off)));
+  var Shutdown : bool = H(((((not (starter_state = Off)) and ((speed = 0) and (HT(2, 0, start_button) and HT(1, 0, YtoPre(true))))) and ZtoPre((not ((not (starter_state = Off)) and ((speed = 0) and (HT(2, 0, start_button) and HT(1, 0, YtoPre(true)))))))) => (starter_state__NXT = Off)));
 
 
   (* Req: upon (start_button & (starter_state = Off)) the Car shall immediately satisfy (starter_state__NXT = Starting). *)

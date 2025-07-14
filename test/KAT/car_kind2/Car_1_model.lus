@@ -68,6 +68,14 @@ let
 tel
 
 
+-- The equivalent of LTL Y in Lustre.
+--   Initially false, then the previous value of X (false, delay X by one)
+node YtoPre(X: bool) returns (Y:bool);
+let
+  Y = false -> pre X;
+tel
+
+
 -- The equivalent of LTL Z in Lustre.
 --   Initially true, then the previous value of X (true, delay X by one)
 node ZtoPre(X: bool) returns (Y:bool);
@@ -89,7 +97,7 @@ let
   
   (* Req: upon persisted(1, (! braking)) the Car shall immediately satisfy (! brake_lights). *)
 
-  var Braking_1 : bool = H((((HT(1, 0, (not braking)) and HT((1 - 1), 0, (not ZtoPre(false)))) and ZtoPre((not (HT(1, 0, (not braking)) and HT((1 - 1), 0, (not ZtoPre(false))))))) => (not brake_lights)));
+  var Braking_1 : bool = H((((HT(1, 0, (not braking)) and HT(0, 0, YtoPre(true))) and ZtoPre((not (HT(1, 0, (not braking)) and HT(0, 0, YtoPre(true)))))) => (not brake_lights)));
 
 
   (* Req: upon braking the Car shall immediately satisfy brake_lights. *)

@@ -33,20 +33,30 @@ dev =
         generate_fret_import =
           in dir = {TopDir}
           exec = eng system gen {Input} &&
+                 echo diff {Expected} {Output} &&
                  diff {Expected} {Output}
         generate_fret_kind2 =
           exec = eng system validate {Input} &&
+                 echo diff {Expected}/Car_0_model.lus {Output}/Car_0_model.lus &&
                  diff {Expected}/Car_0_model.lus {Output}/Car_0_model.lus &&
+                 echo diff {Expected}/Car_1_model.lus {Output}/Car_1_model.lus &&
                  diff {Expected}/Car_1_model.lus {Output}/Car_1_model.lus &&
+                 echo diff {Expected}/Car_2_model.lus {Output}/Car_2_model.lus
                  diff {Expected}/Car_2_model.lus {Output}/Car_2_model.lus
         generate_traces =
           exec = eng system gen {Input} &&
+                 echo diff {Expected}/Car_0_model.lus {Output}/Car_0_model.lus &&
                  diff {Expected}/Car_0_model.lus {Output}/Car_0_model.lus &&
+                 echo diff {Expected}/Car_2_model.lus {Output}/Car_2_model.lus &&
                  diff {Expected}/Car_2_model.lus {Output}/Car_2_model.lus &&
+                 echo diff {Expected}/Car_1_model.lus {Output}/Car_1_model.lus
                  diff {Expected}/Car_1_model.lus {Output}/Car_1_model.lus
         generate_fret_RACK =
+          note = kind2 results processing is not stable, so sort the CSV files
+                 before checking for differences.
           exec = eng system validate {Input} &&
-                 diff {Expected} {Output}
+                 echo diff {Expected} {Output} &&
+                 diff <(sort {Expected}) <(sort {Output})
         test_case_runner =
           nix shell pkgs = nixpkgs#python3
                            nixpkgs#cargo
