@@ -88,6 +88,7 @@ returns ( alarm__NXT : alarm__T );
 let
   
   
+  
   mode alarm__NXT_alarm_disabled ( require alarm__NXT = alarm_disabled; );
   mode alarm__NXT_alarm_enabled ( require alarm__NXT = alarm_enabled; );
   (* Req: upon ((alarm = alarm_enabled) & persisted(2, alarm_button)) the Car shall immediately satisfy (alarm__NXT = alarm_disabled). *)

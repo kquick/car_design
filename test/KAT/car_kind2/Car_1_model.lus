@@ -81,60 +81,39 @@ type starter_state__T = enum { Started, Starting, Off };
 type alarm__T = enum { alarm_disabled, alarm_enabled };
 
 ----------------------------------------------------------------------
-contract Car_0Spec( start_button : bool;
-                    starter_state : starter_state__T;
-                    speed : int )
-returns ( starter_state__NXT : starter_state__T );
+contract Car_1Spec( braking : bool )
+returns ( brake_lights : bool );
 let
   
   
   
-  mode starter_state__NXT_Started ( require starter_state__NXT = Started; );
-  mode starter_state__NXT_Starting ( require starter_state__NXT = Starting; );
-  mode starter_state__NXT_Off ( require starter_state__NXT = Off; );
-  (* Req: upon ((! (starter_state = Off)) & ((speed = 0) & persisted(2, start_button))) the Car shall immediately satisfy (starter_state__NXT = Off). *)
+  (* Req: upon persisted(1, (! braking)) the Car shall immediately satisfy (! brake_lights). *)
 
-  var Shutdown : bool = H(((((not (starter_state = Off)) and ((speed = 0) and (HT(2, 0, start_button) and HT((2 - 1), 0, (not ZtoPre(false)))))) and ZtoPre((not ((not (starter_state = Off)) and ((speed = 0) and (HT(2, 0, start_button) and HT((2 - 1), 0, (not ZtoPre(false))))))))) => (starter_state__NXT = Off)));
+  var Braking_1 : bool = H((((HT(1, 0, (not braking)) and HT((1 - 1), 0, (not ZtoPre(false)))) and ZtoPre((not (HT(1, 0, (not braking)) and HT((1 - 1), 0, (not ZtoPre(false))))))) => (not brake_lights)));
 
 
-  (* Req: upon (start_button & (starter_state = Off)) the Car shall immediately satisfy (starter_state__NXT = Starting). *)
+  (* Req: upon braking the Car shall immediately satisfy brake_lights. *)
 
-  var Start : bool = H((((start_button and (starter_state = Off)) and ZtoPre((not (start_button and (starter_state = Off))))) => (starter_state__NXT = Starting)));
+  var Braking : bool = H(((braking and ZtoPre((not braking))) => brake_lights));
 
 
-  guarantee "Shutdown" Shutdown;
-  guarantee "Start" Start;
+  guarantee "Braking-1" Braking_1;
+  guarantee "Braking" Braking;
 tel
 
 ----------------------------------------------------------------------
-node Car_0 ( start_button : bool;
-                    starter_state : starter_state__T;
-                    speed : int )
-returns ( starter_state__NXT : starter_state__T );
+node Car_1 ( braking : bool )
+returns ( brake_lights : bool );
   (*@contract
-     import Car_0Spec(start_button, starter_state, speed)
-            returns (starter_state__NXT);
+     import Car_1Spec(braking)
+            returns (brake_lights);
   *)
 let
   --%MAIN;
-    starter_state__NXT = starter_sys(start_button, starter_state, speed);
+    brake_lights = brake_system(braking);
 tel
 
-node starter_sys (start_button : bool;
-                  starter_state : starter_state__T;
-                  speed : int)
-returns (starter_state__NXT : starter_state__T);
-var start_pre : bool;
-var start_pre2 : bool;
+node brake_system (braking : bool) returns (brake_lights : bool);
 let
-  start_pre = false -> pre start_button;
-  start_pre2 = false -> start_pre;
-    
-  starter_state__NXT =
-    if ((starter_state = Off) and start_button)
-    then Starting
-    else
-      if (start_button and start_pre and start_pre2)
-      then Off
-      else starter_state;
+  brake_lights = braking;
 tel

@@ -91,6 +91,7 @@ returns ( brake_lights : bool );
 let
   
   
+  
   (* Req: upon persisted(1, (! braking)) the Car shall immediately satisfy (! brake_lights). *)
 
   var Braking_1 : bool = H((((HT(1, 0, (not braking)) and HT((1 - 1), 0, (not ZtoPre(false)))) and ZtoPre((not (HT(1, 0, (not braking)) and HT((1 - 1), 0, (not ZtoPre(false))))))) => (not brake_lights)));

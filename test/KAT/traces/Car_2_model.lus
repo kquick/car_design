@@ -92,12 +92,12 @@ contract Car_2Spec( starter_state : int;
 returns ( alarm__NXT : int );
 let
   
+  assume "starter_state input values" 0 <= starter_state and starter_state <= 2;
+  assume "alarm input values" 0 <= alarm and alarm <= 1;
+  guarantee "alarm__NXT output values" 0 <= alarm__NXT and alarm__NXT <= 1;
   
   mode alarm__NXT_alarm_disabled ( require alarm__NXT = alarm_disabled; );
   mode alarm__NXT_alarm_enabled ( require alarm__NXT = alarm_enabled; );
-  assume "input state range" 0 <= alarm and alarm <= 1;
-  guarantee "output state range" 0 <= alarm__NXT and alarm__NXT <= 1;
-
   (* Req: upon ((alarm = alarm_enabled) & persisted(2, alarm_button)) the Car shall immediately satisfy (alarm__NXT = alarm_disabled). *)
 
   var ALRM_4 : bool = H(((((alarm = alarm_enabled) and (HT(2, 0, alarm_button) and HT((2 - 1), 0, (not ZtoPre(false))))) and ZtoPre((not ((alarm = alarm_enabled) and (HT(2, 0, alarm_button) and HT((2 - 1), 0, (not ZtoPre(false)))))))) => (alarm__NXT = alarm_disabled)));
