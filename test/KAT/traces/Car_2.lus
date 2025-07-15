@@ -1,4 +1,4 @@
---Historically: X has always been true
+--Historically: X has always been true (so-far).
 -- As soon as X is false once, Y will be false forever
 -- (falling edge)
 node H(X:bool) returns (Y:bool);
@@ -87,11 +87,12 @@ tel
 
 type starter_state__T = int;
 type alarm__T = int;
-const alarm_disabled : int = 0;
-const alarm_enabled : int = 1;
-const Started : int = 0;
-const Starting : int = 1;
-const Off : int = 2;
+const
+  alarm_disabled : int = 0;
+  alarm_enabled : int = 1;
+  Started : int = 0;
+  Starting : int = 1;
+  Off : int = 2;
 
 ----------------------------------------------------------------------
 contract Car_2Spec( starter_state : int;
@@ -103,9 +104,6 @@ let
   assume "starter_state input values" 0 <= starter_state and starter_state <= 2;
   assume "alarm input values" 0 <= alarm and alarm <= 1;
   guarantee "alarm__NXT output values" 0 <= alarm__NXT and alarm__NXT <= 1;
-  
-  mode alarm__NXT_alarm_disabled ( require alarm__NXT = alarm_disabled; );
-  mode alarm__NXT_alarm_enabled ( require alarm__NXT = alarm_enabled; );
   (* Req: upon ((alarm = alarm_enabled) & persisted(2, alarm_button)) the Car shall immediately satisfy (alarm__NXT = alarm_disabled). *)
 
   var ALRM_4 : bool = H(((((alarm = alarm_enabled) and (HT(2, 0, alarm_button) and HT(1, 0, YtoPre(true)))) and ZtoPre((not ((alarm = alarm_enabled) and (HT(2, 0, alarm_button) and HT(1, 0, YtoPre(true))))))) => (alarm__NXT = alarm_disabled)));
@@ -118,6 +116,9 @@ let
 
   guarantee "ALRM-4" ALRM_4;
   guarantee "ALRM-1" ALRM_1;
+  
+  mode alarm__NXT_alarm_disabled ( require alarm__NXT = alarm_disabled; );
+  mode alarm__NXT_alarm_enabled ( require alarm__NXT = alarm_enabled; );
 tel
 
 ----------------------------------------------------------------------
@@ -131,24 +132,6 @@ returns ( alarm__NXT : int );
   *)
 let
   --%MAIN;
-    alarm__NXT = alarm_system(alarm, alarm_button, starter_state);
+  
 tel
 
-node alarm_system (alarm : alarm__T;
-                   alarm_button: bool;
-                   starter_state: starter_state__T)
-returns (alarm__NXT : alarm__T);
-var btn_pre : bool;
-var btn_pre_pre : bool;
-let
-  btn_pre = false -> pre alarm_button;
-  btn_pre_pre = false -> pre btn_pre;
-  alarm__NXT =
-    if alarm_button and (alarm = alarm_disabled) and (starter_state = Off)
-    then alarm_enabled
-    else
-      if (alarm = alarm_enabled) and btn_pre and btn_pre_pre
-      then alarm_disabled
-      else alarm;
-tel
-  

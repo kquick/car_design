@@ -1,4 +1,4 @@
---Historically: X has always been true
+--Historically: X has always been true (so-far).
 -- As soon as X is false once, Y will be false forever
 -- (falling edge)
 node H(X:bool) returns (Y:bool);
@@ -96,10 +96,6 @@ returns ( starter_state__NXT : starter_state__T );
 let
   
   
-  
-  mode starter_state__NXT_Started ( require starter_state__NXT = Started; );
-  mode starter_state__NXT_Starting ( require starter_state__NXT = Starting; );
-  mode starter_state__NXT_Off ( require starter_state__NXT = Off; );
   (* Req: upon ((! (starter_state = Off)) & ((speed = 0) & persisted(2, start_button))) the Car shall immediately satisfy (starter_state__NXT = Off). *)
 
   var Shutdown : bool = H(((((not (starter_state = Off)) and ((speed = 0) and (HT(2, 0, start_button) and HT(1, 0, YtoPre(true))))) and ZtoPre((not ((not (starter_state = Off)) and ((speed = 0) and (HT(2, 0, start_button) and HT(1, 0, YtoPre(true)))))))) => (starter_state__NXT = Off)));
@@ -112,6 +108,10 @@ let
 
   guarantee "Shutdown" Shutdown;
   guarantee "Start" Start;
+  
+  mode starter_state__NXT_Started ( require starter_state__NXT = Started; );
+  mode starter_state__NXT_Starting ( require starter_state__NXT = Starting; );
+  mode starter_state__NXT_Off ( require starter_state__NXT = Off; );
 tel
 
 ----------------------------------------------------------------------

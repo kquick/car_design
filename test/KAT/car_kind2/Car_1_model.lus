@@ -1,4 +1,4 @@
---Historically: X has always been true
+--Historically: X has always been true (so-far).
 -- As soon as X is false once, Y will be false forever
 -- (falling edge)
 node H(X:bool) returns (Y:bool);
@@ -94,7 +94,6 @@ returns ( brake_lights : bool );
 let
   
   
-  
   (* Req: upon persisted(1, (! braking)) the Car shall immediately satisfy (! brake_lights). *)
 
   var Braking_1 : bool = H((((HT(1, 0, (not braking)) and HT(0, 0, YtoPre(true))) and ZtoPre((not (HT(1, 0, (not braking)) and HT(0, 0, YtoPre(true)))))) => (not brake_lights)));
@@ -107,6 +106,7 @@ let
 
   guarantee "Braking-1" Braking_1;
   guarantee "Braking" Braking;
+  
 tel
 
 ----------------------------------------------------------------------

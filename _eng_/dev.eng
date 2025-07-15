@@ -45,12 +45,12 @@ dev =
                  diff {Expected}/Car_2_model.lus {Output}/Car_2_model.lus
         generate_traces =
           exec = eng system gen {Input} &&
-                 echo diff {Expected}/Car_0_model.lus {Output}/Car_0_model.lus &&
-                 diff {Expected}/Car_0_model.lus {Output}/Car_0_model.lus &&
-                 echo diff {Expected}/Car_2_model.lus {Output}/Car_2_model.lus &&
-                 diff {Expected}/Car_2_model.lus {Output}/Car_2_model.lus &&
-                 echo diff {Expected}/Car_1_model.lus {Output}/Car_1_model.lus
-                 diff {Expected}/Car_1_model.lus {Output}/Car_1_model.lus
+                 echo diff {Expected}/Car_0.lus {Output}/Car_0.lus &&
+                 diff {Expected}/Car_0.lus {Output}/Car_0.lus &&
+                 echo diff {Expected}/Car_2.lus {Output}/Car_2.lus &&
+                 diff {Expected}/Car_2.lus {Output}/Car_2.lus &&
+                 echo diff {Expected}/Car_1.lus {Output}/Car_1.lus
+                 diff {Expected}/Car_1.lus {Output}/Car_1.lus
         generate_fret_RACK =
           note = kind2 results processing is not stable, so sort the CSV files
                  before checking for differences.

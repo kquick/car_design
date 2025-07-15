@@ -1,4 +1,4 @@
---Historically: X has always been true
+--Historically: X has always been true (so-far).
 -- As soon as X is false once, Y will be false forever
 -- (falling edge)
 node H(X:bool) returns (Y:bool);
@@ -87,17 +87,17 @@ tel
 
 type starter_state__T = int;
 type alarm__T = int;
-const alarm_disabled : int = 0;
-const alarm_enabled : int = 1;
-const Started : int = 0;
-const Starting : int = 1;
-const Off : int = 2;
+const
+  alarm_disabled : int = 0;
+  alarm_enabled : int = 1;
+  Started : int = 0;
+  Starting : int = 1;
+  Off : int = 2;
 
 ----------------------------------------------------------------------
 contract Car_1Spec( braking : bool )
 returns ( brake_lights : bool );
 let
-  
   
   
   (* Req: upon persisted(1, (! braking)) the Car shall immediately satisfy (! brake_lights). *)
@@ -112,6 +112,7 @@ let
 
   guarantee "Braking-1" Braking_1;
   guarantee "Braking" Braking;
+  
 tel
 
 ----------------------------------------------------------------------
@@ -123,10 +124,6 @@ returns ( brake_lights : bool );
   *)
 let
   --%MAIN;
-    brake_lights = brake_system(braking);
+  
 tel
 
-node brake_system (braking : bool) returns (brake_lights : bool);
-let
-  brake_lights = braking;
-tel

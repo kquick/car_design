@@ -1,4 +1,4 @@
---Historically: X has always been true
+--Historically: X has always been true (so-far).
 -- As soon as X is false once, Y will be false forever
 -- (falling edge)
 node H(X:bool) returns (Y:bool);
@@ -96,9 +96,6 @@ returns ( alarm__NXT : alarm__T );
 let
   
   
-  
-  mode alarm__NXT_alarm_disabled ( require alarm__NXT = alarm_disabled; );
-  mode alarm__NXT_alarm_enabled ( require alarm__NXT = alarm_enabled; );
   (* Req: upon ((alarm = alarm_enabled) & persisted(2, alarm_button)) the Car shall immediately satisfy (alarm__NXT = alarm_disabled). *)
 
   var ALRM_4 : bool = H(((((alarm = alarm_enabled) and (HT(2, 0, alarm_button) and HT(1, 0, YtoPre(true)))) and ZtoPre((not ((alarm = alarm_enabled) and (HT(2, 0, alarm_button) and HT(1, 0, YtoPre(true))))))) => (alarm__NXT = alarm_disabled)));
@@ -111,6 +108,9 @@ let
 
   guarantee "ALRM-4" ALRM_4;
   guarantee "ALRM-1" ALRM_1;
+  
+  mode alarm__NXT_alarm_disabled ( require alarm__NXT = alarm_disabled; );
+  mode alarm__NXT_alarm_enabled ( require alarm__NXT = alarm_enabled; );
 tel
 
 ----------------------------------------------------------------------

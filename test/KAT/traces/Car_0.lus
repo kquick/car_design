@@ -1,4 +1,4 @@
---Historically: X has always been true
+--Historically: X has always been true (so-far).
 -- As soon as X is false once, Y will be false forever
 -- (falling edge)
 node H(X:bool) returns (Y:bool);
@@ -87,11 +87,12 @@ tel
 
 type starter_state__T = int;
 type alarm__T = int;
-const alarm_disabled : int = 0;
-const alarm_enabled : int = 1;
-const Started : int = 0;
-const Starting : int = 1;
-const Off : int = 2;
+const
+  alarm_disabled : int = 0;
+  alarm_enabled : int = 1;
+  Started : int = 0;
+  Starting : int = 1;
+  Off : int = 2;
 
 ----------------------------------------------------------------------
 contract Car_0Spec( start_button : bool;
@@ -102,10 +103,6 @@ let
   
   assume "starter_state input values" 0 <= starter_state and starter_state <= 2;
   guarantee "starter_state__NXT output values" 0 <= starter_state__NXT and starter_state__NXT <= 2;
-  
-  mode starter_state__NXT_Started ( require starter_state__NXT = Started; );
-  mode starter_state__NXT_Starting ( require starter_state__NXT = Starting; );
-  mode starter_state__NXT_Off ( require starter_state__NXT = Off; );
   (* Req: upon ((! (starter_state = Off)) & ((speed = 0) & persisted(2, start_button))) the Car shall immediately satisfy (starter_state__NXT = Off). *)
 
   var Shutdown : bool = H(((((not (starter_state = Off)) and ((speed = 0) and (HT(2, 0, start_button) and HT(1, 0, YtoPre(true))))) and ZtoPre((not ((not (starter_state = Off)) and ((speed = 0) and (HT(2, 0, start_button) and HT(1, 0, YtoPre(true)))))))) => (starter_state__NXT = Off)));
@@ -118,6 +115,10 @@ let
 
   guarantee "Shutdown" Shutdown;
   guarantee "Start" Start;
+  
+  mode starter_state__NXT_Started ( require starter_state__NXT = Started; );
+  mode starter_state__NXT_Starting ( require starter_state__NXT = Starting; );
+  mode starter_state__NXT_Off ( require starter_state__NXT = Off; );
 tel
 
 ----------------------------------------------------------------------
@@ -131,24 +132,6 @@ returns ( starter_state__NXT : int );
   *)
 let
   --%MAIN;
-    starter_state__NXT = starter_sys(start_button, starter_state, speed);
+  
 tel
 
-node starter_sys (start_button : bool;
-                  starter_state : starter_state__T;
-                  speed : int)
-returns (starter_state__NXT : starter_state__T);
-var start_pre : bool;
-var start_pre2 : bool;
-let
-  start_pre = false -> pre start_button;
-  start_pre2 = false -> start_pre;
-    
-  starter_state__NXT =
-    if ((starter_state = Off) and start_button)
-    then Starting
-    else
-      if (start_button and start_pre and start_pre2)
-      then Off
-      else starter_state;
-tel
