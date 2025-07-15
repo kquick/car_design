@@ -49,8 +49,8 @@ class Starter:
         self._state = Starter.transition(self._state, start_button, speed)
 
     @staticmethod
-    def transition(inp_state, start_button, speed):
-        return inp_state
+    def transition(starter_state, start_button, speed):
+        return starter_state
 
 
 def drive_car():
