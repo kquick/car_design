@@ -84,7 +84,7 @@ contains
     The brake lights will indicate when the car is braking.
 
     indexing
-      FRET: upon braking the Car shall immediately satisfy brake_lights.
+      FRET: while braking the Car shall always satisfy brake_lights.
       FRET: upon persisted(1, !braking)
             the Car shall immediately
             satisfy !brake_lights.

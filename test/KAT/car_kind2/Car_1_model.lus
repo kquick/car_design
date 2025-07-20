@@ -99,9 +99,9 @@ let
   var Braking_1 : bool = H((((HT(1, 0, (not braking)) and HT(0, 0, YtoPre(true))) and ZtoPre((not (HT(1, 0, (not braking)) and HT(0, 0, YtoPre(true)))))) => (not brake_lights)));
 
 
-  (* Req: upon braking the Car shall immediately satisfy brake_lights. *)
+  (* Req: while braking the Car shall always satisfy brake_lights. *)
 
-  var Braking : bool = H(((braking and ZtoPre((not braking))) => brake_lights));
+  var Braking : bool = H((braking => brake_lights));
 
 
   guarantee "Braking-1" Braking_1;
