@@ -36,6 +36,7 @@ dev =
                  echo diff {Expected} {Output} &&
                  diff {Expected} {Output}
         generate_fret_kind2 =
+          in dir = {TopDir}
           exec = eng system validate {Input} &&
                  echo diff {Expected}/Car_0_model.lus {Output}/Car_0_model.lus &&
                  diff {Expected}/Car_0_model.lus {Output}/Car_0_model.lus &&
@@ -44,6 +45,7 @@ dev =
                  echo diff {Expected}/Car_2_model.lus {Output}/Car_2_model.lus
                  diff {Expected}/Car_2_model.lus {Output}/Car_2_model.lus
         generate_traces =
+          in dir = {TopDir}
           exec = eng system gen {Input} &&
                  echo diff {Expected}/Car_0.lus {Output}/Car_0.lus &&
                  diff {Expected}/Car_0.lus {Output}/Car_0.lus &&
@@ -54,6 +56,7 @@ dev =
         generate_fret_RACK =
           note = kind2 results processing is not stable, so sort the CSV files
                  before checking for differences.
+          in dir = {TopDir}
           exec = eng system validate {Input} &&
                  echo diff {Expected} {Output} &&
                  diff <(sort {Expected}) <(sort {Output})
@@ -62,6 +65,7 @@ dev =
                            nixpkgs#cargo
                            nixpkgs#rustc
                            nixpkgs#gcc
+          in dir = {TopDir}
           exec =
              # cd test /traces/Car_0/oracle
              # cargo run -- --car_0
